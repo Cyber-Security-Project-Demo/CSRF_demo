@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Demo Bank Login</h2>
+    <form method="POST" action="/login">
+      <label>Username: <input name="username" value="alice" /></label><br />
+      <button type="submit">Login as Alice</button>
+    </form>
+    <p>
+      After logging in you'll be at <a href="/bank">/bank</a> (vulnerable form)
+      and <a href="/bank-csrf">/bank-csrf</a> (protected).
+    </p>
+  </body>
+</html>

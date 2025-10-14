@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Bank (CSRF PROTECTED)</h2>
+    <form method="POST" action="/transfer-csrf">
+      <input type="hidden" name="_csrf" value="{{CSRF_TOKEN}}" />
+      <label>To: <input name="to" value="hacker" /></label><br />
+      <label>Amount: <input name="amount" value="1000" /></label><br />
+      <button type="submit">Send (protected)</button>
+    </form>
+    <p>
+      <a href="/bank">Vulnerable version</a> |
+      <a href="/balances">View balances (JSON)</a>
+    </p>
+  </body>
+</html>

