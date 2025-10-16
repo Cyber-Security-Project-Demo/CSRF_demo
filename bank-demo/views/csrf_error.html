@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>403 • Invalid CSRF token</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="card center">
+        <h2>Request blocked (403)</h2>
+        <p class="subtitle">
+          This action was rejected due to an invalid or missing CSRF token.
+        </p>
+        <p class="subtitle" style="margin-top: 8px">
+          <strong>Request:</strong>
+          <span>{{METHOD}}</span>
+          <code style="margin-left: 6px">{{PATH}}</code>
+        </p>
+        <div
+          class="alert warning"
+          style="text-align: left; margin: 16px auto; max-width: 560px"
+        >
+          <strong>Why this happens:</strong>
+          <ul>
+            <li>
+              A cross-site page tried to submit a form without the secret CSRF
+              token.
+            </li>
+            <li>
+              The CSRF token in the request didnt match the session token.
+            </li>
+          </ul>
+          <div style="margin-top: 10px; font-size: 13px; color: var(--muted)">
+            <div>Origin: <code>{{ORIGIN}}</code></div>
+            <div>Referer: <code>{{REFERER}}</code></div>
+            <div>Time: <code>{{TIME}}</code></div>
+          </div>
+        </div>
+        <div class="nav" style="justify-content: center; margin-top: 12px">
+          <a href="/bank">Back to Vulnerable</a>
+          <a href="/bank-csrf">Back to Protected</a>
+          <a href="/balances">View balances (JSON)</a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

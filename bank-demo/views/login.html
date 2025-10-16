@@ -1,14 +1,34 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Bank • Login</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
   <body>
-    <h2>Demo Bank Login</h2>
-    <form method="POST" action="/login">
-      <label>Username: <input name="username" value="alice" /></label><br />
-      <button type="submit">Login as Alice</button>
-    </form>
-    <p>
-      After logging in you'll be at <a href="/bank">/bank</a> (vulnerable form)
-      and <a href="/bank-csrf">/bank-csrf</a> (protected).
-    </p>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <h2>Demo Bank Login</h2>
+        </div>
+        <p class="subtitle">
+          A simple demo to showcase CSRF attacks and protections.
+        </p>
+        <form class="form" method="POST" action="/login">
+          <div>
+            <label class="label" for="username">Username</label>
+            <input id="username" class="input" name="username" value="alice" />
+          </div>
+          <div>
+            <button class="btn" type="submit">Login as Alice</button>
+          </div>
+        </form>
+        <div class="footer">
+          After logging in you'll be at <a href="/bank">/bank</a> (vulnerable
+          form) and <a href="/bank-csrf">/bank-csrf</a> (protected).
+        </div>
+      </div>
+    </div>
   </body>
 </html>

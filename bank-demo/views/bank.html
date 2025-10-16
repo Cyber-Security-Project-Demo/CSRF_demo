@@ -1,17 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Demo Bank • Vulnerable</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
   <body>
-    <h2>Bank (VULNERABLE)</h2>
-    <p>Logged in user: (session)</p>
-    <form method="POST" action="/transfer">
-      <label>To: <input name="to" value="hacker" /></label><br />
-      <label>Amount: <input name="amount" value="1000" /></label><br />
-      <button type="submit">Send (vulnerable)</button>
-    </form>
-    <p>
-      <a href="/bank-csrf">Protected version</a> |
-      <a href="/balances">View balances (JSON)</a> |
-      <a href="/logout">Logout</a>
-    </p>
+    <div class="container">
+      <div class="card">
+        <div class="header">
+          <div>
+            <h2>Bank (VULNERABLE)</h2>
+            <p class="subtitle">
+              This form has no CSRF protection. Submissions can be forged by
+              third-party sites.
+            </p>
+          </div>
+          <nav class="nav">
+            <a href="/bank-csrf">Protected version</a>
+            <a href="/balances">Balances (JSON)</a>
+            <a href="/logout">Logout</a>
+          </nav>
+        </div>
+
+        <form class="form" method="POST" action="/transfer">
+          <div>
+            <label class="label" for="to">To</label>
+            <input id="to" name="to" class="input" value="hacker" />
+          </div>
+          <div>
+            <label class="label" for="amount">Amount</label>
+            <input id="amount" name="amount" class="input" value="1000" />
+          </div>
+          <div>
+            <button class="btn" type="submit">Send (vulnerable)</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

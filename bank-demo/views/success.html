@@ -1,7 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Transfer Success</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
   <body>
-    <h2>Transfer processed</h2>
-    <p>Check <a href="/balances">balances</a></p>
+    <div class="container">
+      <div class="card center">
+        <h2>Transfer processed ✅</h2>
+        <p class="subtitle">Your transfer has been submitted.</p>
+        <p><a href="/balances">View balances (JSON)</a></p>
+        <div class="nav" style="justify-content: center; margin-top: 12px">
+          <a href="/bank">Back to Vulnerable</a>
+          <a href="/bank-csrf">Back to Protected</a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
