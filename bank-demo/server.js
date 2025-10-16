@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cookieSession = require("cookie-session");
 const csurf = require("csurf");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -21,6 +22,12 @@ app.use(
 // Serve static attacker pages for convenience if you want:
 // (not necessary but handy)
 app.use("/static", express.static(path.join(__dirname, "static")));
+
+// Also serve the top-level attacker folder for easy demos
+app.use("/attacker", express.static(path.join(__dirname, "..", "attacker")));
+
+// Serve public assets (CSS, images) at root path, e.g., /styles.css
+app.use(express.static(path.join(__dirname, "public")));
 
 // Simple in-memory "account" for demo
 let accounts = {
@@ -108,6 +115,52 @@ app.post("/transfer-csrf", csrfProtection, (req, res) => {
 // Quick route to view balances (for demo)
 app.get("/balances", (req, res) => {
   res.json(accounts);
+});
+
+// Friendly CSRF error page instead of stack trace
+app.use((err, req, res, next) => {
+  if (err && err.code === "EBADCSRFTOKEN") {
+    // If client expects JSON, return a JSON error for API-like requests
+    const acceptsJson = (req.headers["accept"] || "").includes(
+      "application/json"
+    );
+    const details = {
+      error: "Invalid CSRF token",
+      status: 403,
+      method: req.method,
+      path: req.originalUrl || req.url,
+      origin: req.headers.origin || null,
+      referer: req.headers.referer || null,
+      time: new Date().toISOString(),
+    };
+    if (acceptsJson) {
+      return res.status(403).json(details);
+    }
+
+    // Otherwise, render a friendly HTML page with a few request details
+    const templatePath = path.join(__dirname, "views", "csrf_error.html");
+    try {
+      const html = fs.readFileSync(templatePath, "utf8");
+      const escape = (s) =>
+        String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      const rendered = html
+        .replace(/{{METHOD}}/g, escape(details.method))
+        .replace(/{{PATH}}/g, escape(details.path))
+        .replace(/{{ORIGIN}}/g, escape(details.origin || "-"))
+        .replace(/{{REFERER}}/g, escape(details.referer || "-"))
+        .replace(/{{TIME}}/g, escape(details.time));
+      return res.status(403).send(rendered);
+    } catch (e) {
+      // Fallback if template missing
+      return res.status(403).send("Invalid CSRF token");
+    }
+  }
+  next(err);
 });
 
 app.listen(3000, () => {
