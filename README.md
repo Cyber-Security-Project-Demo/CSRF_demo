@@ -130,3 +130,41 @@ This demo helps understand:
 - How CSRF attacks work
 - Why CSRF tokens are important
 - How to implement CSRF protection using the `csurf` middleware
+
+## How CSRF works (short)
+
+- A victim is logged in to a site (their browser holds session cookies).
+- An attacker page (on another tab/site) makes the victim’s browser send a request to the target site (e.g., auto-submitting a hidden form).
+- Browsers automatically attach the victim’s cookies, so the server sees an authenticated request—even though the user didn’t intend it.
+- CSRF defense: the site embeds an unguessable CSRF token in its forms and verifies it on POST/PUT/DELETE. Attackers can’t read this token due to the Same Origin Policy, so their forged requests lack a valid token and are rejected.
+
+Notes:
+
+- SameSite cookies help, but CSRF tokens remain the robust, explicit server-side protection.
+- Intentional actions by the user (submitting the real form) are allowed; CSRF only blocks forged cross-site submissions.
+
+## How this demo proves it
+
+1. Log in as Alice:
+
+   - http://localhost:3000/login
+
+2. Baseline balances:
+
+   - http://localhost:3000/balances
+
+3. Vulnerable endpoint accepts a forged POST:
+
+   - Open http://localhost:3000/static/attacker-post.html
+   - It auto-submits to `/transfer` with Alice’s cookies → transfer succeeds.
+   - Check balances again: hacker increased.
+
+4. Protected endpoint rejects the same forged POST:
+
+   - Open http://localhost:3000/static/attacker-post-protected.html
+   - It posts to `/transfer-csrf` without a token → 403 “Invalid CSRF token” page.
+   - Balances remain unchanged.
+
+5. Legitimate protected form works:
+   - Use http://localhost:3000/bank-csrf
+   - The page includes a valid CSRF token → transfer succeeds when you submit intentionally.
