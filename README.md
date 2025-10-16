@@ -40,7 +40,7 @@ Login at http://localhost:3000/login
 
 1. **Login**: Visit http://localhost:3000/login and login as Alice
 2. **Access vulnerable bank page**: You'll be redirected to http://localhost:3000/bank
-3. **Test CSRF attack**: Open `attacker/attacker-form.html` or `attacker/attacker-img.html` in a separate browser tab while logged into the bank
+3. **Test CSRF attack**: Use the demo pages under `/static` (see section below) while logged into the bank
 
 ### Testing the Protected Endpoint:
 
@@ -61,12 +61,11 @@ While logged in as Alice, open these demo pages in new tabs to simulate forged f
 - Protected attack (will be blocked with 403):
   - http://localhost:3000/static/attacker-post-protected.html → auto-submits to `/transfer-csrf` without a token
 
-You can also try the original attacker examples:
-
-- http://localhost:3000/attacker/attacker-form.html
-- http://localhost:3000/attacker/attacker-img.html
-
 Check balances at http://localhost:3000/balances to see the effect.
+
+Optional: cross-site demo
+
+To demonstrate a true cross-site request, host an attacker page on another port/origin (e.g., using a tiny static server). The vulnerable endpoint will still accept it; the CSRF-protected endpoint will reject it.
 
 ## How It Works
 
@@ -122,10 +121,6 @@ bank-demo/
    ├── csrf_error.html
    ├── login.html
    └── success.html
-
-attacker/
-├── attacker-form.html
-└── attacker-img.html
 ```
 
 ## Security Learning
